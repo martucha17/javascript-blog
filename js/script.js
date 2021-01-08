@@ -51,7 +51,7 @@ const optArticleSelector = '.post',
   // eslint-disable-next-line no-unused-vars
   optArticleTagsSelector = '.post-tags .list';
 
-function generateTitleLinks() {
+  function generateTitleLinks(customSelector = ''){
 
   /* remove contents of titleList */
   const titleList = document.querySelector(optTitleListSelector);
@@ -61,7 +61,7 @@ function generateTitleLinks() {
   console.log(titleList);
 
   /* for each article */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(optArticleSelector + customSelector);
   console.log(articles);
 
 
@@ -159,13 +159,15 @@ function tagClickHandler(event){
 
   
   /* find all tag links with class active */
-  const activeLink = document.querySelector('.post-tags li.active');
+  const activeLink = document.querySelectorAll('.post-tags li a.active');
   
   /* remove class active */
-  if (activeLink) activeLink.classList.remove('active');
+  for (let link of activeLink){
+  activeLink.classList.remove('active');
+}
   
   /* find all tag links with "href" attribute equal to the "href" constant */
-  const targetLink = document.querySelector(href);
+  const targetLink = document.querySelectorAll('a[href="' + href + '"]');
   
   /* START LOOP: for each found tag link */
   for (let link of targetLink){
@@ -181,7 +183,7 @@ function tagClickHandler(event){
 
 function addClickListenersToTags(){
   /* find all links to tags */
-  const Links = document.querySelectorAll('a[href="' + href + '"]');
+  const links = document.querySelectorAll('a[href^="#tag-"]');
 
   /* add tagClickHandler as event listener for that link */
   for (let link of links) {
